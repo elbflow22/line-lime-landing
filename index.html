@@ -142,8 +142,9 @@
   .hero-grid{position:relative;z-index:1;display:grid;grid-template-columns:minmax(0,1.02fr) minmax(0,.98fr);gap:44px;align-items:center}
   .hero-copy{max-width:640px}
   .hero-kicker{margin-top:22px;font-size:clamp(1.05rem,1.7vw,1.4rem);font-weight:600;letter-spacing:-.015em;color:var(--ink)}
-  .rotator{display:inline-block;color:var(--lime);min-width:2.4em;transition:opacity .25s var(--ease),transform .25s var(--ease)}
+  .rotator{display:inline-block;color:var(--lime);transition:opacity .25s var(--ease),transform .25s var(--ease)}
   .rotator.out{opacity:0;transform:translateY(-9px)}
+  .hbreak{display:none} /* forced hero line-breaks — desktop only (enabled in min-width:921 below) */
 
   .hero-visual{position:relative;z-index:1;display:flex;align-items:center;justify-content:center;min-height:580px}
   .hv-stage{position:relative;width:270px}
@@ -197,6 +198,10 @@
   @keyframes hvFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
   @keyframes hvFloatRot{0%,100%{transform:translateY(0) rotate(-5deg)}50%{transform:translateY(-10px) rotate(-5deg)}}
 
+  @media (min-width:921px){
+    .hbreak{display:inline}              /* enable the after-"resets" / after-"pressure" breaks on desktop */
+    .hv-stage{transform:translateX(32px)} /* nudge the phone a touch to the right */
+  }
   @media (max-width:920px){
     .hero-grid{grid-template-columns:1fr;gap:8px}
     .hero-copy{max-width:660px}
@@ -485,8 +490,8 @@
   <div class="wrap hero-grid">
     <div class="hero-copy">
     <span class="eyebrow reveal">For creators who post every single day.</span>
-    <h1 class="reveal d1">The algorithm resets every&nbsp;morning.
-      <span class="soft">So does the pressure to feed&nbsp;it.</span>
+    <h1 class="reveal d1">The algorithm resets <br class="hbreak">every morning.
+      <span class="soft">So does the pressure <br class="hbreak">to feed it.</span>
     </h1>
     <p class="hero-kicker reveal d2">Your next <span class="rotator" id="heroRotator">TikTok</span> starts&nbsp;here.</p>
     <p class="lede reveal d2">Staying consistent is the number-one thing creators struggle with — and the fastest road to burnout. <span style="color:var(--ink)">Line Lime</span> is the home for every script you write: draft on-voice, ship on cadence, and get sharper with every post — without the blank-page grind.</p>
