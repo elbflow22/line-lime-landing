@@ -134,6 +134,86 @@
   .platforms span{display:inline-flex;align-items:center;gap:9px;opacity:.85}
   .platforms svg{width:17px;height:17px;flex:none;color:var(--muted)}
 
+  /* ============================================================
+     HERO VISUAL (ADDED) — vertical short-form phone mock.
+     Self-contained: delete this block + the matching HTML block,
+     and rename .hero-grid -> .hero-inner, to fully revert.
+     ============================================================ */
+  .hero-grid{position:relative;z-index:1;display:grid;grid-template-columns:minmax(0,1.02fr) minmax(0,.98fr);gap:44px;align-items:center}
+  .hero-copy{max-width:640px}
+  .hero-kicker{margin-top:22px;font-size:clamp(1.05rem,1.7vw,1.4rem);font-weight:600;letter-spacing:-.015em;color:var(--ink)}
+  .rotator{display:inline-block;color:var(--lime);min-width:2.4em;transition:opacity .25s var(--ease),transform .25s var(--ease)}
+  .rotator.out{opacity:0;transform:translateY(-9px)}
+
+  .hero-visual{position:relative;z-index:1;display:flex;align-items:center;justify-content:center;min-height:580px}
+  .hv-stage{position:relative;width:270px}
+
+  .hv-phone{position:relative;z-index:2;width:270px;height:560px;padding:9px;border-radius:40px;
+    background:linear-gradient(160deg,#1b1f16,#0c0e0a);border:1px solid rgba(240,242,230,.14);
+    box-shadow:0 44px 100px -34px rgba(0,0,0,.85),0 0 0 6px rgba(240,242,230,.018),inset 0 0 0 2px rgba(0,0,0,.5);
+    animation:hvFloat 6s ease-in-out infinite}
+  .hv-notch{position:absolute;top:13px;left:50%;transform:translateX(-50%);width:80px;height:20px;background:#050604;border-radius:0 0 15px 15px;z-index:6}
+  .hv-screen{position:relative;width:100%;height:100%;border-radius:31px;overflow:hidden;display:flex;flex-direction:column;
+    background:radial-gradient(120% 78% at 50% 10%,rgba(196,248,42,.20),transparent 46%),linear-gradient(180deg,#123320,#0b1712 58%,#0a0d0a)}
+  .hv-screen::after{content:"";position:absolute;inset:0;pointer-events:none;
+    background:linear-gradient(180deg,rgba(0,0,0,.28),transparent 26%,transparent 52%,rgba(0,0,0,.6))}
+  .hv-top{position:relative;z-index:3;display:flex;justify-content:space-between;align-items:center;padding:22px 15px 0;font-size:11px;font-weight:600;color:rgba(255,255,255,.9)}
+  .hv-live{background:rgba(0,0,0,.32);padding:3px 9px;border-radius:20px;color:#fff}
+  .hv-fyp{border-bottom:2px solid #fff;padding-bottom:3px}
+  .hv-play{position:absolute;top:45%;left:50%;transform:translate(-50%,-50%);z-index:2;width:56px;height:56px;border-radius:50%;
+    background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.28);display:flex;align-items:center;justify-content:center;backdrop-filter:blur(3px)}
+  .hv-play svg{width:24px;height:24px;color:#fff;margin-left:3px}
+  .hv-rail{position:absolute;right:11px;bottom:100px;z-index:3;display:flex;flex-direction:column;align-items:center;gap:17px}
+  .hv-ava{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--lime),#3a7d10);border:2px solid #fff;margin-bottom:2px}
+  .hv-act{display:flex;flex-direction:column;align-items:center;gap:3px;color:#fff}
+  .hv-act svg{width:27px;height:27px;filter:drop-shadow(0 1px 3px rgba(0,0,0,.45))}
+  .hv-act.liked svg{color:var(--lime)}
+  .hv-act b{font-size:11px;font-weight:600}
+  .hv-caption{position:absolute;left:15px;right:60px;bottom:17px;z-index:3;color:#fff}
+  .hv-handle{font-weight:700;font-size:13.5px;margin-bottom:5px}
+  .hv-cap{font-size:12.5px;line-height:1.42;color:rgba(255,255,255,.94);margin-bottom:9px}
+  .hv-sound{display:flex;align-items:center;gap:7px;font-size:11px;color:rgba(255,255,255,.85)}
+  .hv-sound svg{width:12px;height:12px;flex:none}
+
+  .hv-chip{position:absolute;z-index:4;background:rgba(19,22,14,.82);backdrop-filter:blur(12px);
+    border:1px solid var(--line);border-radius:14px;box-shadow:0 22px 55px -22px rgba(0,0,0,.7)}
+  .hv-streak{top:2px;left:-16px;padding:10px 15px;display:flex;align-items:center;gap:8px;font-size:13.5px;font-weight:500;color:var(--ink);animation:hvFloat 6s ease-in-out infinite .5s}
+  .hv-streak b{color:var(--lime);font-weight:700}
+  .hv-streak .fire{font-size:15px;line-height:1}
+  .hv-stat{bottom:38px;right:-20px;padding:13px 17px;display:flex;flex-direction:column;gap:2px;text-align:left;animation:hvFloat 7s ease-in-out infinite 1.1s}
+  .hv-stat b{font-family:'Fraunces',serif;font-weight:500;font-size:1.55rem;color:var(--lime);line-height:1}
+  .hv-stat span{font-size:11px;color:var(--muted)}
+
+  .hv-scriptcard{position:absolute;z-index:1;left:-48px;bottom:104px;width:174px;padding:14px;
+    background:rgba(18,21,14,.94);border:1px solid var(--line);border-radius:14px;
+    box-shadow:0 26px 64px -26px rgba(0,0,0,.78);animation:hvFloatRot 6.5s ease-in-out infinite .3s}
+  .hv-sc-row{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+  .hv-sc-row:last-child{margin-bottom:0}
+  .hv-sc-tag{font-size:9px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--lime);background:rgba(196,248,42,.15);padding:3px 7px;border-radius:6px;flex:none}
+  .hv-sc-tag.dim{color:var(--muted);background:rgba(240,242,230,.06)}
+  .hv-l{height:6px;border-radius:4px;background:rgba(240,242,230,.18);display:block}
+  .hv-l.w80{width:78px}.hv-l.w60{width:56px}.hv-l.w40{width:38px}
+
+  @keyframes hvFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+  @keyframes hvFloatRot{0%,100%{transform:translateY(0) rotate(-5deg)}50%{transform:translateY(-10px) rotate(-5deg)}}
+
+  @media (max-width:920px){
+    .hero-grid{grid-template-columns:1fr;gap:8px}
+    .hero-copy{max-width:660px}
+    .hero-visual{min-height:0;margin-top:34px;justify-content:flex-start}
+    .hv-scriptcard{left:-24px}
+  }
+  @media (max-width:560px){
+    .hero-visual{justify-content:center}
+    .hv-stage{transform:scale(.92)}
+    .hv-scriptcard{display:none}
+    .hv-stat{right:-6px}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .hv-phone,.hv-streak,.hv-stat,.hv-scriptcard{animation:none}
+  }
+  /* ====================== /HERO VISUAL ====================== */
+
   /* ---------- generic section ---------- */
   section{position:relative}
   .band{padding:112px 0}
@@ -402,11 +482,13 @@
 <!-- ============ HERO (pain-first) ============ -->
 <section class="hero">
   <div class="hero-glow" aria-hidden="true"></div>
-  <div class="wrap hero-inner">
-    <span class="eyebrow reveal">For professional short-form creators</span>
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+    <span class="eyebrow reveal">For creators who post every single day.</span>
     <h1 class="reveal d1">The algorithm resets every&nbsp;morning.
       <span class="soft">So does the pressure to feed&nbsp;it.</span>
     </h1>
+    <p class="hero-kicker reveal d2">Your next <span class="rotator" id="heroRotator">TikTok</span> starts&nbsp;here.</p>
     <p class="lede reveal d2">Staying consistent is the number-one thing creators struggle with — and the fastest road to burnout. <span style="color:var(--ink)">Line Lime</span> is the home for every script you write: draft on-voice, ship on cadence, and get sharper with every post — without the blank-page grind.</p>
     <div class="hero-actions reveal d3">
       <button class="btn btn-primary" data-open-modal data-src="hero">Join the waitlist <svg class="arr" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
@@ -415,7 +497,63 @@
     <div class="hero-actions" style="margin-top:22px">
       <span class="hero-note"><span class="dot"></span> Early access opening in waves — <b>&nbsp;founding creators get in first</b></span>
     </div>
+    </div><!-- /.hero-copy -->
 
+    <!-- ============================================================
+         HERO VISUAL — vertical short-form phone mock (ADDED)
+         · To REVERT visual + two-column layout:
+             1) delete this whole block (down to "/HERO VISUAL")
+             2) rename class "hero-grid" -> "hero-inner" (a few lines up)
+             3) optionally delete the .hero-kicker rotator <p> and the
+                closing </div><!-- /.hero-copy --> + <div class="wrap"> below
+         · To EDIT the phone's text/numbers: change the HERO_VISUAL config
+           object in the <script> near the bottom of this file.
+         · Pure CSS/SVG — no images. Styles live in the "HERO VISUAL" CSS
+           block (search that name in <style>).
+         ============================================================ -->
+    <div class="hero-visual reveal d3" aria-hidden="true">
+      <div class="hv-stage">
+        <!-- floating: posting streak -->
+        <div class="hv-chip hv-streak"><span class="fire">🔥</span> <b id="hvStreak">47</b>-day streak</div>
+
+        <!-- floating: script card (your script → their caption) -->
+        <div class="hv-scriptcard">
+          <div class="hv-sc-row"><span class="hv-sc-tag">Hook</span><i class="hv-l w80"></i></div>
+          <div class="hv-sc-row"><span class="hv-sc-tag dim">Body</span><i class="hv-l w60"></i></div>
+          <div class="hv-sc-row"><span class="hv-sc-tag dim">CTA</span><i class="hv-l w40"></i></div>
+        </div>
+
+        <!-- the phone -->
+        <div class="hv-phone">
+          <div class="hv-notch"></div>
+          <div class="hv-screen">
+            <div class="hv-top"><span class="hv-live">● 0:07</span><span class="hv-fyp">For You</span></div>
+            <div class="hv-play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>
+
+            <div class="hv-rail">
+              <div class="hv-ava"></div>
+              <span class="hv-act liked"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-7.6-4.7-10.1-9.4C.1 8.2 1.8 4.8 5.2 4.8c2.1 0 3.4 1.2 4.2 2.4C10.4 6 11.7 4.8 13.8 4.8c3.4 0 5.1 3.4 3.3 6.8C14.6 16.3 12 21 12 21z"/></svg><b id="hvLikes">48.2K</b></span>
+              <span class="hv-act"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 4h16v11H8l-4 4z"/></svg><b id="hvComments">1,204</b></span>
+              <span class="hv-act"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8h16v-8M12 3v13M7 8l5-5 5 5"/></svg><b id="hvShares">876</b></span>
+              <span class="hv-act"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 3h12v18l-6-4-6 4z"/></svg><b>Save</b></span>
+            </div>
+
+            <div class="hv-caption">
+              <div class="hv-handle" id="hvHandle">@yourhandle</div>
+              <div class="hv-cap" id="hvCaption">POV: you never stare at a blank page again</div>
+              <div class="hv-sound"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 18V5l10-2v13"/><circle cx="6.5" cy="18" r="2.6"/><circle cx="16.5" cy="16" r="2.6"/></svg><span id="hvSound">original sound — Line Lime</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- floating: performance stat -->
+        <div class="hv-chip hv-stat"><b id="hvStatValue">+38%</b><span id="hvStatLabel">avg. retention</span></div>
+      </div>
+    </div>
+    <!-- ===================== /HERO VISUAL ===================== -->
+    </div><!-- /.hero-grid -->
+
+    <div class="wrap">
     <div class="marquee-strip reveal">
       <div class="marquee-label">Built short-form first · long-form welcome</div>
       <div class="platforms">
@@ -811,6 +949,72 @@
      Paste your Formspree form ID below (the part after formspree.io/f/).
      e.g. if your endpoint is https://formspree.io/f/mabcwxyz  →  FORMSPREE_ID = "mabcwxyz"     */
   const FORMSPREE_ID = "xykqvzrw";
+
+  /* ======================================================================
+     HERO VISUAL — editable content (ADDED)
+     Everything shown on the phone mock + the rotating word is set here.
+     Change a value, save, commit — no other edits needed.
+     ====================================================================== */
+  const HERO_VISUAL = {
+    rotatorWords: ["TikTok", "Reel", "Short", "hook", "video"], // cycles in the headline
+    handle:    "@yourhandle",
+    caption:   "POV: you never stare at a blank page again",
+    sound:     "original sound — Line Lime",
+    likes:     48200,     // number — auto-formats (48.2K) and counts up on load
+    comments:  "1,204",
+    shares:    "876",
+    streakDays: 47,
+    statValue: "+38%",
+    statLabel: "avg. retention"
+  };
+
+  (function initHeroVisual(){
+    const q = id => document.getElementById(id);
+    const V = HERO_VISUAL;
+    const reduce = matchMedia('(prefers-reduced-motion:reduce)').matches;
+    const set = (id,val) => { const el=q(id); if(el) el.textContent = val; };
+
+    set('hvHandle', V.handle);   set('hvCaption', V.caption);   set('hvSound', V.sound);
+    set('hvComments', V.comments); set('hvShares', V.shares);   set('hvStreak', V.streakDays);
+    set('hvStatValue', V.statValue); set('hvStatLabel', V.statLabel);
+
+    const fmt = n => n >= 1000
+      ? (n/1000).toFixed(n >= 100000 ? 0 : 1).replace(/\.0$/,'') + 'K'
+      : String(n);
+
+    const likesEl = q('hvLikes');
+    if (likesEl){
+      if (reduce){ likesEl.textContent = fmt(V.likes); }
+      else {
+        const target = V.likes, start = Math.floor(target*0.72), dur = 1400;
+        let t0 = null;
+        const step = t => {
+          if(t0===null) t0 = t;
+          const p = Math.min(1,(t - t0)/dur);
+          const cur = Math.round(start + (target-start)*(1-Math.pow(1-p,3)));
+          likesEl.textContent = fmt(cur);
+          if(p<1) requestAnimationFrame(step);
+        };
+        requestAnimationFrame(step);
+      }
+    }
+
+    const rot = q('heroRotator');
+    if (rot){
+      rot.textContent = V.rotatorWords[0];
+      if (!reduce && V.rotatorWords.length > 1){
+        let i = 0;
+        setInterval(() => {
+          rot.classList.add('out');
+          setTimeout(() => {
+            i = (i+1) % V.rotatorWords.length;
+            rot.textContent = V.rotatorWords[i];
+            rot.classList.remove('out');
+          }, 250);
+        }, 2000);
+      }
+    }
+  })();
 
   /* ---- year ---- */
   document.getElementById('yr').textContent = new Date().getFullYear();
