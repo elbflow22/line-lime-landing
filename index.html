@@ -432,6 +432,21 @@
   .success h3{font-size:1.8rem}
   .success p{color:var(--muted);font-size:15px;margin-top:12px;max-width:360px;margin-inline:auto}
 
+  /* ---- avatar pop-up ---- */
+  .pop-view[hidden]{display:none}
+  .pop-actions{display:flex;flex-direction:column;gap:10px;padding:6px 32px 32px}
+  .pop-actions .btn{width:100%}
+  .pop-choices{display:flex;flex-direction:column;gap:9px;padding:6px 32px 32px}
+  .pop-choice{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;text-align:left;
+    background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:12px;padding:14px 16px;
+    color:var(--ink);font-family:inherit;font-size:14.5px;cursor:pointer;transition:border-color .2s,background .2s}
+  .pop-choice:hover{border-color:var(--lime);background:rgba(196,248,42,.06)}
+  .pop-choice svg{width:16px;height:16px;color:var(--faint);flex:none}
+  .pop-choice:hover svg{color:var(--lime)}
+  @media (max-width:560px){
+    .pop-actions,.pop-choices{padding-left:24px;padding-right:24px}
+  }
+
   /* ---------- reveal anim ---------- */
   .reveal{opacity:0;transform:translateY(26px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
   .reveal.in{opacity:1;transform:none}
@@ -869,6 +884,7 @@
         <input class="hp" type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" />
         <input type="hidden" name="_subject" value="New Line Lime waitlist signup" />
         <input type="hidden" name="source" id="srcField" value="" />
+        <input type="hidden" name="objection" id="objField" value="" />
 
         <div class="fld">
           <label for="email">Your email <span class="req">*</span></label>
@@ -946,6 +962,51 @@
       <div style="margin-top:26px"><button class="btn btn-ghost" id="doneBtn">Close</button></div>
     </div>
 
+  </div>
+</div>
+
+<!-- ============ AVATAR POP-UP (timed offer → objection → matched bonus → re-ask) ============ -->
+<div class="modal-scrim" id="popScrim" role="dialog" aria-modal="true" aria-labelledby="popTitle">
+  <div class="modal">
+    <button class="modal-close" id="popClose" aria-label="Close">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+
+    <!-- view: the offer -->
+    <div class="pop-view" id="popOffer">
+      <div class="modal-head" style="border-bottom:none">
+        <span class="eyebrow" id="popEyebrow"></span>
+        <h3 id="popTitle"></h3>
+        <p id="popSub"></p>
+      </div>
+      <div class="pop-actions">
+        <button type="button" class="btn btn-primary" data-pop="yes" id="popYes"></button>
+        <button type="button" class="btn btn-ghost" data-pop="no" id="popNo"></button>
+      </div>
+    </div>
+
+    <!-- view: why not -->
+    <div class="pop-view" id="popWhy" hidden>
+      <div class="modal-head" style="border-bottom:none">
+        <span class="eyebrow" id="popWhyEyebrow"></span>
+        <h3 id="popWhyTitle"></h3>
+        <p id="popWhySub"></p>
+      </div>
+      <div class="pop-choices" id="popChoices"></div>
+    </div>
+
+    <!-- view: matched bonus + re-ask -->
+    <div class="pop-view" id="popBonus" hidden>
+      <div class="modal-head" style="border-bottom:none">
+        <span class="eyebrow lime">Here's an idea</span>
+        <h3 id="popBonusTitle"></h3>
+        <p id="popBonusCounter"></p>
+      </div>
+      <div class="pop-actions">
+        <button type="button" class="btn btn-primary" data-pop="yesbonus" id="popBonusYes"></button>
+        <button type="button" class="btn btn-ghost" data-pop="close" id="popBonusNo"></button>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -1044,6 +1105,7 @@
 
   function openModal(src){
     lastFocus = document.activeElement;
+    try{ localStorage.setItem('ll_engaged','1'); }catch(e){}
     document.getElementById('srcField').value = src || 'unknown';
     formView.style.display = 'block';
     successView.classList.remove('show');
@@ -1107,6 +1169,125 @@
       submitBtn.innerHTML = original;
     }
   });
+
+  /* ======================================================================
+     AVATAR POP-UP — timed offer → "why not?" → matched bonus → re-ask (ADDED)
+     Faithful to the $100M Offers move: on "no", surface the bonus that kills
+     their exact objection, then ask once more. Honest waitlist framing
+     ("reserve your spot"), not "buy" — there's no checkout yet.
+     Edit ALL copy in this POPUP config. To revert: delete the popup modal
+     HTML block, this config + initPopup IIFE, and the ".pop-*" CSS block.
+     ====================================================================== */
+  const POPUP = {
+    delaySeconds: 40,                 // time on page before it appears
+    eyebrow: "One quick question",
+    headline: "Posting almost every day — and sick of the blank page?",
+    sub: "If you're a creator who wants to stay consistent without burning out, Line Lime was built for exactly you. Want first access?",
+    yesLabel: "Yes — reserve my spot",
+    noLabel: "Not for me",
+    whyEyebrow: "No worries",
+    whyHeadline: "What's holding you back?",
+    whySub: "One tap — it genuinely helps us build the right thing.",
+    bonusYesLabel: "Reserve my founding spot",
+    bonusNoLabel: "Maybe later",
+    objections: [
+      { id:"voice", label:"It won't really sound like me",
+        title:"Then the Voice Match Concierge is on us",
+        counter:"Fair — sounding generic is the #1 reason creators ditch AI tools. So founding creators get a 1:1 session where we build your voice profile with you. Drafts sound like you from day one." },
+      { id:"consistency", label:"I'll never actually stick with it",
+        title:"That's literally the thing we solve",
+        counter:"Totally normal. Founding creators get the 30-Day Consistency Sprint — a batching playbook plus streaks that keep you posting even in a brutal week." },
+      { id:"price", label:"It's probably too expensive",
+        title:"Founding price, locked for life",
+        counter:"Founding creators lock ~$99/mo for life — a fraction of a $1,000+/mo ghostwriter. And joining the waitlist costs nothing today." },
+      { id:"time", label:"I don't have time to learn a new tool",
+        title:"We set you up — you don't lift a finger",
+        counter:"You won't touch a setup screen. We migrate your existing scripts and build your profile with you, so you start full, not from a blank tool." },
+      { id:"switch", label:"I already use something else",
+        title:"Here's the one thing yours can't do",
+        counter:"Most tools stop at generating. Line Lime is the only one that closes the loop from your real published performance back into your next script. Worth a look?" },
+      { id:"browsing", label:"I'm just browsing",
+        title:"All good — no pitch",
+        counter:"The door's open whenever the blank page gets old. Want us to save you a founding spot, just in case?" }
+    ]
+  };
+
+  (function initPopup(){
+    const scrimP = document.getElementById('popScrim');
+    if(!scrimP) return;
+    const q = id => document.getElementById(id);
+    let chosen = null;
+
+    const track = (ev, data) => { try{ (window.dataLayer = window.dataLayer || []).push(Object.assign({event:ev}, data||{})); }catch(e){} };
+    const engaged = () => { try{ return localStorage.getItem('ll_engaged')==='1'; }catch(e){ return false; } };
+    const seen = () => { try{ return sessionStorage.getItem('ll_pop_seen')==='1'; }catch(e){ return false; } };
+
+    // static copy
+    q('popEyebrow').textContent = POPUP.eyebrow;
+    q('popTitle').textContent = POPUP.headline;
+    q('popSub').textContent = POPUP.sub;
+    q('popYes').textContent = POPUP.yesLabel;
+    q('popNo').textContent = POPUP.noLabel;
+    q('popWhyEyebrow').textContent = POPUP.whyEyebrow;
+    q('popWhyTitle').textContent = POPUP.whyHeadline;
+    q('popWhySub').textContent = POPUP.whySub;
+    q('popBonusYes').textContent = POPUP.bonusYesLabel;
+    q('popBonusNo').textContent = POPUP.bonusNoLabel;
+
+    // objection buttons
+    const choices = q('popChoices');
+    POPUP.objections.forEach(o=>{
+      const b = document.createElement('button');
+      b.type = 'button'; b.className = 'pop-choice';
+      b.innerHTML = '<span></span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>';
+      b.querySelector('span').textContent = o.label;
+      b.addEventListener('click', ()=>{
+        chosen = o.id; track('popup_objection', {objection:o.id});
+        q('popBonusTitle').textContent = o.title;
+        q('popBonusCounter').textContent = o.counter;
+        showView('bonus');
+        setTimeout(()=>{ const y=q('popBonusYes'); if(y) y.focus(); }, 60);
+      });
+      choices.appendChild(b);
+    });
+
+    function showView(v){
+      q('popOffer').hidden = v!=='offer';
+      q('popWhy').hidden   = v!=='why';
+      q('popBonus').hidden = v!=='bonus';
+    }
+    function openPop(force){
+      if(!force && (seen() || engaged())) return;
+      if(scrim.classList.contains('open')) return;      // waitlist already open
+      try{ sessionStorage.setItem('ll_pop_seen','1'); }catch(e){}
+      chosen = null; showView('offer');
+      scrimP.classList.add('open'); document.body.style.overflow='hidden';
+      track('popup_shown');
+      setTimeout(()=>{ const y=q('popYes'); if(y) y.focus(); }, 320);
+    }
+    function closePop(){ scrimP.classList.remove('open'); document.body.style.overflow=''; }
+    function toForm(srcTag){
+      closePop();
+      try{ q('objField').value = chosen || ''; }catch(e){}
+      openModal(srcTag);   // opens the waitlist form; sets source + engaged flag
+    }
+
+    scrimP.addEventListener('click', (e)=>{
+      const t = e.target.closest('[data-pop]');
+      if(!t){ if(e.target===scrimP){ track('popup_dismiss'); closePop(); } return; }
+      const a = t.dataset.pop;
+      if(a==='yes'){ track('popup_yes'); toForm('avatar-popup'); }
+      else if(a==='no'){ track('popup_no'); showView('why'); }
+      else if(a==='yesbonus'){ track('popup_yes_after_bonus', {objection:chosen}); toForm('avatar-bonus:'+(chosen||'')); }
+      else if(a==='close'){ track('popup_dismiss_after_bonus', {objection:chosen}); closePop(); }
+    });
+    q('popClose').addEventListener('click', ()=>{ track('popup_dismiss'); closePop(); });
+    document.addEventListener('keydown', (e)=>{ if(e.key==='Escape' && scrimP.classList.contains('open')) closePop(); });
+
+    // preview instantly with ?pop=1 (bypasses the once-per-session guard)
+    if(/[?&]pop=1/.test(location.search)){ setTimeout(()=>openPop(true), 600); }
+    else { setTimeout(openPop, POPUP.delaySeconds*1000); }
+  })();
 </script>
 </body>
 </html>
