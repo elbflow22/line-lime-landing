@@ -501,17 +501,18 @@
   .countdown{text-align:center;margin:0 auto 26px;max-width:420px}
   .countdown-offer{margin:46px auto 4px}
   /* hero Summer-Launch banner + slim countdown */
-  .hero-banner{display:flex;align-items:center;justify-content:space-between;gap:10px 22px;flex-wrap:wrap;
-    border:1px solid rgba(196,248,42,.3);border-radius:14px;padding:11px 18px;margin-bottom:34px;max-width:660px;
-    background:linear-gradient(90deg,rgba(196,248,42,.10),rgba(196,248,42,.02));font-size:14px;color:var(--ink)}
-  .hb-left{display:inline-flex;align-items:center;gap:11px;flex-wrap:wrap}
-  .hb-left b{color:var(--lime);font-weight:600}
-  .hb-badge{font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:#0B0C0A;background:var(--lime);border-radius:20px;padding:4px 11px;white-space:nowrap}
-  .hb-cd{display:inline-flex;align-items:center;gap:5px;font-size:13.5px;color:var(--ink);white-space:nowrap;font-variant-numeric:tabular-nums}
-  .hb-cd b{font-family:'Fraunces',serif;font-weight:500;font-size:1.05rem;color:var(--lime)}
-  .hb-cd i{font-style:normal;color:var(--faint)}
-  .hb-cd span{color:var(--muted);margin-left:4px;font-family:'Inter',sans-serif;font-size:12px}
-  @media (max-width:560px){ .hero-banner{font-size:13px} }
+  .hero-banner{display:flex;align-items:center;gap:10px 16px;flex-wrap:wrap;
+    border:1px solid rgba(196,248,42,.28);border-radius:14px;padding:11px 12px 11px 14px;margin-bottom:38px;
+    background:linear-gradient(90deg,rgba(196,248,42,.12),rgba(196,248,42,.035) 55%,transparent);
+    font-size:13.5px;color:var(--muted)}
+  .hb-badge{font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:#0B0C0A;background:var(--lime);border-radius:8px;padding:6px 11px;white-space:nowrap;flex:none}
+  .hb-text{flex:1 1 auto;min-width:220px;line-height:1.4}
+  .hb-text b{color:var(--ink);font-weight:600}
+  .hb-cd{display:inline-flex;gap:7px;flex:none;margin-left:auto}
+  .hb-cell{display:inline-flex;align-items:baseline;gap:3px;background:rgba(11,12,10,.45);border:1px solid var(--line);border-radius:8px;padding:6px 9px}
+  .hb-cell b{font-family:'Fraunces',serif;font-weight:500;font-size:1.1rem;color:var(--lime);line-height:1;font-variant-numeric:tabular-nums}
+  .hb-cell i{font-style:normal;font-size:10.5px;color:var(--faint)}
+  @media (max-width:640px){ .hb-cd{margin-left:0} .hb-text{min-width:0} }
   .cd-head{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--lime-dim);font-weight:600;margin-bottom:14px}
   .cd-row{display:flex;align-items:center;justify-content:center;gap:10px}
   .cd-unit{display:flex;flex-direction:column;align-items:center;min-width:72px;border:1px solid var(--line);border-radius:12px;padding:12px 8px;background:linear-gradient(180deg,rgba(196,248,42,.05),transparent)}
@@ -681,8 +682,13 @@
   <div class="hero-glow" aria-hidden="true"></div>
   <div class="wrap">
     <div class="hero-banner reveal">
-      <span class="hb-left"><span class="hb-badge">☀ Summer Launch</span> Lock the founding price — <b>€99/mo, for life</b></span>
-      <span class="hb-cd"><b data-cd-d>—</b>d <i>:</i> <b data-cd-h>—</b>h <i>:</i> <b data-cd-m>—</b>m <span>to launch</span></span>
+      <span class="hb-badge">☀ Summer Launch</span>
+      <span class="hb-text">Lock <b>€99/mo — for life.</b> First come, first served — <b>only the first 100</b> get the founding price.</span>
+      <span class="hb-cd">
+        <span class="hb-cell"><b data-cd-d>—</b><i>d</i></span>
+        <span class="hb-cell"><b data-cd-h>—</b><i>h</i></span>
+        <span class="hb-cell"><b data-cd-m>—</b><i>m</i></span>
+      </span>
     </div>
   </div>
   <div class="wrap hero-grid">
