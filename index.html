@@ -508,11 +508,13 @@
   .hb-badge{font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:#0B0C0A;background:var(--lime);border-radius:8px;padding:6px 11px;white-space:nowrap;flex:none}
   .hb-text{flex:1 1 auto;min-width:220px;line-height:1.4}
   .hb-text b{color:var(--ink);font-weight:600}
-  .hb-cd{display:inline-flex;gap:7px;flex:none;margin-left:auto}
+  .hb-cd{display:inline-flex;align-items:center;gap:9px;flex:none;margin-left:auto}
+  .hb-pitch{font-family:'Fraunces',serif;font-style:italic;font-weight:500;font-size:13.5px;line-height:1.15;color:var(--lime);white-space:nowrap;letter-spacing:.005em}
+  .hb-pitch .hb-arrow{font-style:normal;margin-left:5px;opacity:.65}
   .hb-cell{display:inline-flex;align-items:baseline;gap:3px;background:rgba(11,12,10,.45);border:1px solid var(--line);border-radius:8px;padding:6px 9px}
   .hb-cell b{font-family:'Fraunces',serif;font-weight:500;font-size:1.1rem;color:var(--lime);line-height:1;font-variant-numeric:tabular-nums}
   .hb-cell i{font-style:normal;font-size:10.5px;color:var(--faint)}
-  @media (max-width:640px){ .hb-cd{margin-left:0} .hb-text{min-width:0} }
+  @media (max-width:640px){ .hb-cd{margin-left:0} .hb-text{min-width:0} .hb-pitch{white-space:normal} }
   .cd-head{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--lime-dim);font-weight:600;margin-bottom:14px}
   .cd-row{display:flex;align-items:center;justify-content:center;gap:10px}
   .cd-unit{display:flex;flex-direction:column;align-items:center;min-width:72px;border:1px solid var(--line);border-radius:12px;padding:12px 8px;background:linear-gradient(180deg,rgba(196,248,42,.05),transparent)}
@@ -600,7 +602,7 @@
   .hp{position:absolute;left:-9999px;opacity:0}
 
   .form-msg{display:none;padding:8px 0}
-  .form-msg.err{display:block;color:#ff8b8b;font-size:13.5px;margin-top:8px;text-align:center}
+  .form-msg.err{color:#ff8b8b;font-size:13.5px;margin-top:8px;text-align:center}
 
   .success{display:none;text-align:center;padding:50px 34px 44px}
   .success.show{display:block}
@@ -685,6 +687,7 @@
       <span class="hb-badge">☀ Summer Launch</span>
       <span class="hb-text">Lock <b>€99/mo — for life.</b> First come, first served — <b>only the first 100</b> get the founding price.</span>
       <span class="hb-cd">
+        <span class="hb-pitch">When summer ends, we launch<span class="hb-arrow">→</span></span>
         <span class="hb-cell"><b data-cd-d>—</b><i>d</i></span>
         <span class="hb-cell"><b data-cd-h>—</b><i>h</i></span>
         <span class="hb-cell"><b data-cd-m>—</b><i>m</i></span>
